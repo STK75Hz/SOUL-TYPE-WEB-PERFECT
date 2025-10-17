@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Luckiest+Guy&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+:root {
+    --bgColor: #333;
+    --textPrimary: #fff;
+    --textSecondary: #666;
+    --primaryColor: #fd4;
+}
+
+body {
+    font-family: "Playpen Sans Thai", cursive;
+    background-color: var(--bgColor);
+    color: var(--textPrimary);
+    font-size: 1.4rem;
+}
+
+main {
+    width: 600px;
+    margin: 50px auto;
+}
+
+h1 {
+    color: var(--primaryColor)
+}
+
+h1 svg {
+    width: 40px;
+    fill: var(--primaryColor);
+}
+
+#header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 20px 6px 30px;
+}
+
+#buttons {
+    text-align: right;
+}
+
+#info {
+    color: var(--primaryColor);
+}
+
+button {
+    background: rgba(255, 255, 255, .2);
+    border: 0;
+    color: rgba(255, 255, 255, .5);
+    padding: 5px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+div#game {
+    line-height: 35px;
+    height: 120px;
+    overflow: hidden;
+    position: relative;
+    /* ลบ border และ padding ออก */
+}
+
+div#game:focus {
+    outline: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    transition: margin-top 0.1s ease-out;
+}
+
+#words {
+    filter: blur(5px);
+    color: var(--textSecondary);
+    width: 100%;
+}
+
+#game:focus #words {
+    filter: blur(0);
+}
+
+#focus-error {
+    position: absolute;
+    inset: 0;
+    text-align: center;
+    padding-top: 35px;
+}
+
+#game:focus #focus-error {
+    display: none;
+}
+
+div.word {
+    display: inline-block;
+    font-family: 'Mirt', monospace;
+    margin: 0 5px;
+}
+
+.letter.correct {
+    color: #fff;
+}
+
+.letter.incorrect {
+    color: #f55;
+}
+
+@keyframes blink {
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+#cursor {
+    display: none;
+    width: 2px;
+    height: 1.6rem;
+    background: var(--primaryColor);
+    position: fixed;
+    top: 196px;
+    left: 439px;
+    animation: blink .5s infinite;
+}
+
+#game:focus #cursor{
+    display: block;
+}
+
+#game.over #words{
+    opacity: .5;
+    filter: blur(0px);
+}
+
+#game.over:focus #cursor{
+    display: none;
+}
+
+#game.over #focus-error {
+    display: none;
+}
