@@ -8,7 +8,7 @@
 }
 
 body {
-    font-family: "Playpen Sans Thai", cursive;
+    font-family: "Luckiest Guy", cursive;
     background-color: var(--bgColor);
     color: var(--textPrimary);
     font-size: 1.4rem;
@@ -56,10 +56,9 @@ div#game {
     height: 120px;
     overflow: hidden;
     position: relative;
-    /* ลบ border และ padding ออก */
 }
 
-div#game:focus {
+div#game:focus { /* ????????? */
     outline: 0;
     display: flex;
     flex-wrap: wrap;
@@ -70,12 +69,11 @@ div#game:focus {
 #words {
     filter: blur(5px);
     color: var(--textSecondary);
-    width: 100%;
 }
 
 #game:focus #words {
     filter: blur(0);
-}
+}   /* ใช้สำหรับเวลาคลิกเริ่มแล้วคำที่อยู่ในเกมหายเบลอ */
 
 #focus-error {
     position: absolute;
@@ -86,11 +84,11 @@ div#game:focus {
 
 #game:focus #focus-error {
     display: none;
-}
+}   /* ใช้สำหรับเวลาคลิกเริ่มแล้วให้คำคลิกเริ่มหายไป */
 
 div.word {
     display: inline-block;
-    font-family: 'Mirt', monospace;
+    font-family: 'Roboto Mono', monospace;
     margin: 0 5px;
 }
 
@@ -123,11 +121,11 @@ div.word {
     top: 196px;
     left: 439px;
     animation: blink .5s infinite;
-}
+} /* เคอร์เซอร์สกอของตำแหน่งข้อความ */
 
 #game:focus #cursor{
     display: block;
-}
+} /* เรียกใช้เคอร์เซอร์เมื่อกดfocus */
 
 #game.over #words{
     opacity: .5;

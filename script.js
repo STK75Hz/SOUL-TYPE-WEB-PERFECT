@@ -1,4 +1,4 @@
-const words = 'ไป มา ดู นั่ง เดิน รัก ฝัน ใจ ดี มาก น้อย ฟ้า ดิน น้ำ ลม ไฟ บ้าน เมือง ถนน ทะเล ภูเขา ดาว พระจันทร์ เช้า เย็น คืน วัน หัวใจ เวลา สุข เศร้า เหงา ยิ้ม ร้องไห้ ความฝัน ความรัก ความหวัง ความเชื่อ มิตรภาพ กำลังใจ อนาคต ปัจจุบัน ความสุข ความทุกข์ ชีวิต จิตใจ ความดี ความงาม ความสงบ ธรรมชาติ ดอกไม้ สายลม แสงแดด เสียงเพลง รอยยิ้ม แรงบันดาลใจ ความจริง เส้นทาง การเดินทาง การเริ่มต้น ความพยายาม ความสำเร็จ แรงศรัทธา ความกล้า ความอดทน ความเข้าใจ การให้อภัย ความเมตตา การเรียนรู้ การเติบโต การเปลี่ยนแปลง ความมั่นคง ความสดใส ความบริสุทธิ์ ความอบอุ่น ความคิดถึง ความทรงจำ ความตั้งใจ ความหมาย ความงดงาม การสร้างสรรค์ ความดีงาม ความเรียบง่าย ความสุขใจ ความเพียร ความสง่า การผ่อนคลาย ความมีสติ ความสงบสุข ความกล้าหาญ ความฝันใหม่'.split(' ');
+const words = 'i you me we us the to be go do my in on up at by of so no yes run fly win joy sun sky red big new old try eat fix aim see love hope grow life time calm kind true vibe plan work rest play read sing make code team soul stay rise push feel give take find care heal learn dream peace trust focus power smile brave strong change light sound world heart faith build start energy moment future simple steady shine gentle motion adapt purpose spark harmony patience courage fearless inspire progress belief freedom create vision clarity journey balance growth passion evolve achieve success mindful steadyflow positivity reflection unity gratitude challenge discover potential explore limitless endurance mindset discipline perspective improvement happiness motivation connection adventure foundation resilience determination persistence transformation serenity unstoppable'.split(' ');
 
 const wordsCount = words.length;
 const gameTime = 30 * 1000;
@@ -27,8 +27,7 @@ function newGame() {
     const wordsEl = document.getElementById('words');
     wordsEl.innerHTML = '';
 
-    // สร้างคำจำนวนน้อยลงเพื่อให้พอดีกับ 3 บรรทัด
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 200; i++) {
         wordsEl.innerHTML += formatWord(randomWord());
     }
 
@@ -44,7 +43,7 @@ function newGame() {
 
     removeClass(document.getElementById('game'), 'over');
 
-    // เซ็ตเคอร์เซอร์ตรงตัวแรก
+    // เซ็ตเคอร์เซอร์ตรงตัวแรก (รอ DOM เสร็จ)
     setTimeout(() => {
         const cursor = document.getElementById('cursor');
         const firstLetter = document.querySelector('.letter.current');
@@ -54,6 +53,18 @@ function newGame() {
             cursor.style.left = rect.left + 'px';
         }
     }, 100);
+
+    // เมื่อ focus อีกครั้ง เคอร์เซอร์จะกลับไปตำแหน่งถูกต้อง
+    const game = document.getElementById('game');
+    game.addEventListener('focus', () => {
+        const cursor = document.getElementById('cursor');
+        const firstLetter = document.querySelector('.letter.current');
+        if (cursor && firstLetter) {
+            const rect = firstLetter.getBoundingClientRect();
+            cursor.style.top = rect.top + 2 + 'px';
+            cursor.style.left = rect.left + 'px';
+        }
+    }, { once: true });
 
     // ให้เบลอก่อน ต้องคลิกเพื่อเริ่ม
     document.getElementById('game').blur();
@@ -76,7 +87,7 @@ function getWpm() {
 function gameOver() {
     clearInterval(window.timer);
     addClass(document.getElementById('game'), 'over');
-    document.getElementById('info').innerHTML = `WPM: ${Math.round(getWpm())}`;
+    document.getElementById('info').innerHTML = `WPM: ${getWpm()}`;
 }
 
 // ระบบพิมพ์
@@ -152,16 +163,16 @@ document.getElementById('game').addEventListener('keyup', ev => {
         }
     }
 
-    // เลื่อนคำขึ้นเมื่อบรรทัดเต็ม (ปรับให้เลื่อนเมื่อถึงบรรทัดที่ 3)
-    if (currentWord.getBoundingClientRect().top > 270) {
+    //  เลื่อนคำขึ้นเมื่อบรรทัดเต็ม
+    if (currentWord.getBoundingClientRect().top > 250) {
         const words = document.getElementById('words');
         const firstWord = document.querySelector('.word');
-        const lineHeight = firstWord ? firstWord.offsetHeight + 6 : 37;
+        const lineHeight = firstWord ? firstWord.offsetHeight + 5 : 35;
         const margin = parseInt(words.style.marginTop || '0px');
         words.style.marginTop = (margin - lineHeight) + 'px';
     }
 
-    // อัปเดตตำแหน่งเคอร์เซอร์ให้ตรง
+    //  อัปเดตตำแหน่งเคอร์เซอร์ให้ตรง
     const nextLetter = document.querySelector('.letter.current');
     const nextWord = document.querySelector('.word.current');
     const cursor = document.getElementById('cursor');
@@ -172,7 +183,7 @@ document.getElementById('game').addEventListener('keyup', ev => {
     }
 });
 
-// ปุ่ม New Game
+//  ปุ่ม New Game
 document.getElementById('newGameBtn').addEventListener('click', () => {
     clearInterval(window.timer);
     window.timer = null;
@@ -180,5 +191,5 @@ document.getElementById('newGameBtn').addEventListener('click', () => {
     newGame();
 });
 
-// เริ่มเกมครั้งแรก
+//  เริ่มเกมครั้งแรก
 newGame();
